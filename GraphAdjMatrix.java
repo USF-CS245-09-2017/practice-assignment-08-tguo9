@@ -1,3 +1,9 @@
+
+/*
+ * This is a class for GraphAdjMatrix. By using 2D-Array, for small number.
+ * @author Tao Guo
+ */
+
 import java.util.Stack;
 
 public class GraphAdjMatrix implements Graph {
@@ -31,19 +37,23 @@ public class GraphAdjMatrix implements Graph {
 		boolean[] visited = new boolean[edges.length];
 
 		for (int i = 0; i < visited.length; i++) {
-			if (!visited[i]) {
+			if (visited[i] == false) {
 				explore(i, visited);
 			}
 		}
 
 	}
 
+	/*
+	 * Override explore method. Take int from for loop, and boolean array to keep
+	 * track of visited.
+	 */
 	private void explore(int v, boolean[] visited) {
 
 		Stack<Integer> s = new Stack<Integer>();
 		s.push(new Integer(v));
 
-		while (!s.empty()) {
+		while (s.empty() == false) {
 
 			int pop = s.pop();
 			System.out.print(pop + " ");
@@ -51,10 +61,10 @@ public class GraphAdjMatrix implements Graph {
 
 			int[] neighbors = neighbors(pop);
 
-			for (int n : neighbors) {
-				if (!visited[n]) {
-					s.push(new Integer(n));
-					visited[n] = true;
+			for (int i = 0; i < neighbors.length; i++) {
+				if (visited[neighbors[i]] == false) {
+					s.push(new Integer(neighbors[i]));
+					visited[neighbors[i]] = true;
 				}
 			}
 		}
@@ -68,7 +78,7 @@ public class GraphAdjMatrix implements Graph {
 	 */
 	public int[] neighbors(int vertex) {
 
-		int[] vertexs = new int[outdegree(vertex)];
+		int[] vertexs = new int[outDegree(vertex)];
 		int index = 0;
 
 		for (int i = 0; i < edges.length; i++) {
@@ -80,7 +90,10 @@ public class GraphAdjMatrix implements Graph {
 		return vertexs;
 	}
 
-	private int outdegree(int vertex) {
+	/*
+	 * Helper methods for finding neighbors. By find the out-degree of vertex.
+	 */
+	private int outDegree(int vertex) {
 		int degree = 0;
 		for (int i = 0; i < edges.length; i++) {
 			if (edges[vertex][i] != Integer.MAX_VALUE && edges[vertex][i] != 0) {
